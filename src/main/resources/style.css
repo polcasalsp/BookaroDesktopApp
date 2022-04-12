@@ -1,0 +1,39 @@
+.mfx-text-field {
+	-fx-background-color: #7d7d7d;
+	-fx-border-color: #2D3447;
+}
+
+.mfx-password-field {
+	-fx-background-color: #7d7d7d;
+	-fx-border-color: #2D3447;
+}
+
+.mfx-text-field .floating-text {
+	-fx-background-color: transparent;
+	-fx-text-fill: #FFFFFF;
+}
+
+.mfx-password-field .floating-text {
+	-fx-background-color: transparent;
+	-fx-text-fill: #FFFFFF;
+}
+
+.mfx-button {
+	-fx-background-color: #1B69D6; 
+	-fx-background-radius: 25;
+	-fx-text-fill: white;
+	-fx-font-size: 18px;
+}
+
+.menu-button > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    background-color: transparent;
+}
+
+.menu-label {
+	-fx-text-fill: white;
+}
+
+.pane {
+	-fx-background-color: #b8cdf8;
+}

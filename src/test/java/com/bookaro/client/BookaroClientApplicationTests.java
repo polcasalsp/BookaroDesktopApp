@@ -20,8 +20,9 @@ class BookaroClientApplicationTests {
 	private LoginService loginService;
 	@Test
 	void contextLoads() throws IOException {
-		loginService = new LoginService();
-		String token = loginService.sendCredentials("admin", "admin");
+		loginService = LoginService.getLogin();
+		loginService.sendCredentials("admin", "admin");
+		String token = loginService.getToken();
 		dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
 		
 		Response<ArrayList<Book>> findBooks = dbcs.getBooks().execute();

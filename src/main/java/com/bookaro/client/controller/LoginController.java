@@ -1,6 +1,7 @@
 package com.bookaro.client.controller;
 
 import java.io.IOException;
+import java.net.ConnectException;
 
 import com.bookaro.client.service.LoginService;
 
@@ -22,6 +23,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+/**
+ * @author Pol Casals
+ *
+ */
 public class LoginController {	
 	
 	@FXML
@@ -42,51 +47,58 @@ public class LoginController {
 	@FXML 
 	private BorderPane bp;
 	
-	String token = "";
+	private String token = "";
 	
-	public void initialize() {
-		loginBtn.setDefaultButton(true);
-		
-	}
+	/**
+	 * @author Pol Casals
+	 * @param event
+	 * @throws IOException
+	 */
 	
-	public void login (ActionEvent event) throws IOException {
+	@FXML
+	private void login (ActionEvent event) throws IOException {
 		
 		Window owner = loginBtn.getScene().getWindow();		
 		
 		if (usernameField.getText().isEmpty()) {
-            Tools.showAlert(Alert.AlertType.ERROR, owner, "Username Error", "Please enter your username");
+            Tools.showAlert(Alert.AlertType.ERROR, owner, "Username Error", "Please enter username");
             return;
         }
 		
         if (passwordField.getText().isEmpty()) {
-        	Tools.showAlert(Alert.AlertType.ERROR, owner, "Password Error", "Please enter a valid password");
+        	Tools.showAlert(Alert.AlertType.ERROR, owner, "Password Error", "Please enter password");
             return;
-        }
-       
+        }       
+        
         try {			
-		    LoginService loginService = new LoginService();
-		    token = loginService.sendCredentials(usernameField.getText(), passwordField.getText());			       
+		    LoginService loginService = LoginService.getLogin();
+		    loginService.sendCredentials(usernameField.getText(), passwordField.getText());		
+		    token = loginService.getToken();
 		} catch (ArrayIndexOutOfBoundsException e) {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Credentials Error", "Incorrect username/password combination");
+		} catch (ConnectException e) {
+			Tools.showAlert(Alert.AlertType.ERROR, owner, "Connection Error", "Refused Connection");
 		}
-        
-        if (token != "") {
+        checkLoginChangeScene();        
+	}
+	
+	private void checkLoginChangeScene() throws IOException {
+		if (token != "") {
         	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
         	Parent mainScreen = loader.load();
             Stage stage = (Stage)loginBtn.getScene().getWindow();
             Scene scene = new Scene(mainScreen, 1280, 800);
             scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
             Tools.draggableWindow(stage, mainScreen);
-        	MainController mc = loader.getController();
-            mc.setToken(token);
             stage.setScene(scene);
         }     
 	}
 	
-	public void register (ActionEvent event) throws IOException {
-		
-	}
-	
+	/**
+	 * @author Pol Casals
+	 * @param event
+	 * @throws IOException
+	 */
 	public void close (ActionEvent event) throws IOException {
 		Platform.exit();
 	}

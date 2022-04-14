@@ -12,12 +12,23 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * @author Pol Casals
+ *
+ */
 public class BookaroGUI extends Application {
+	
+	/**
+	 * @author Pol Casals
+	 */
 	@Override
 	public void init() throws Exception {
 		SpringApplication.run(getClass()).getAutowireCapableBeanFactory().autowireBean(this);
 	}
 
+	/**
+	 * @author Pol Casals
+	 */
 	@Override
 	public void start(final Stage stage) throws Exception {	
 
@@ -28,6 +39,9 @@ public class BookaroGUI extends Application {
 		stage.show();
 	}	
 
+	/**
+	 * @author Pol Casals
+	 */
 	@Override
 	public void stop() throws Exception {
 		Platform.exit();

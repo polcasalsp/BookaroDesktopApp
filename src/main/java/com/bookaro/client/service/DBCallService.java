@@ -9,6 +9,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
+/**
+ * @author Pol Casals
+ *
+ */
 public interface DBCallService {	
 	
 	@GET("/api/services/controller/users")

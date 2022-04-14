@@ -13,11 +13,21 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * @author Pol Casals
+ *
+ */
 public class RetrofitClient {
 	
 	private static Retrofit retrofit = null;
 	private final static String serverUrl = "http://127.0.0.1:8080";
 	
+	/**
+	 * @author Pol Casals
+	 * @param token
+	 * @return
+	 * @throws IOException
+	 */
 	public static Retrofit getClient(String token) throws IOException {	
 		
 	    //Interceptor that adds JWT token to future requests

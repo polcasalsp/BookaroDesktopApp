@@ -10,6 +10,7 @@ import com.bookaro.client.Utils.Tools;
 import com.bookaro.client.model.Book;
 import com.bookaro.client.model.User;
 import com.bookaro.client.service.DBCallService;
+import com.bookaro.client.service.LoginService;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -30,22 +31,25 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import retrofit2.Response;
 
+/**
+ * 
+ * @author Pol Casals
+ *@
+ */
 public class MainController {
 	
 	@FXML
 	private TableView<User> userTable;
 	
 	@FXML
-	private TableColumn<User, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, roleColumn;
-	
-	@FXML
-	private TableColumn<User, Long> idColumn;
+	private TableColumn<User, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, roleColumn, idColumn;
 	
 	@FXML
 	private Label currentMenuLabel, currentUsernameLabel;
@@ -68,7 +72,7 @@ public class MainController {
     @FXML
     private ScrollPane scroll;
     
-    private String token = "";
+    private String token = LoginService.getLogin().getToken();
     
     private List<Book> books = new ArrayList<Book>();
 	
@@ -78,40 +82,36 @@ public class MainController {
 	
 	private DBCallService dbcs;
 	
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public void initialize() {
+	/**
+	 * @author Pol Casals
+	 */
+	@FXML
+	private void initialize() {
 		homePane.toFront();
 		Platform.runLater(new Runnable() {
             @Override
-            public void run() {
-            	Response<User> findUser = null;
-            	Response<ArrayList<User>> findUsers = null;
+            public void run() {	
             	try {
 					dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
-					findUser = dbcs.findByUsername(Tools.getUsernameFromToken(token)).execute();
+					User currentUser = getCurrentUser();
+					profileBtn.setText(currentUser.getFirstName() + " " + currentUser.getLastName()); 
 	            	
 	            	if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
-	            		adminTools.visibleProperty().set(true);
-	            		findUsers = dbcs.getUsers().execute();
-	            		for (User user : findUsers.body()) {
-	            			updatedUsers.add(user);
-	            		}		
-	            		showUsersTable();
+	            		adminTools.visibleProperty().set(true);		
+	            		getUsers();
+	            		populateUsersTable();
 	            	}
 				} catch (IOException e) {
 					e.printStackTrace();
-				}  
-            	if (findUser != null) {
-                	User currentUser = findUser.body();
-                	profileBtn.setText(currentUser.getFirstName() + " " + currentUser.getLastName());            	
-            	}            	
+				}              	          	
             }
-        });		
+		});		
 	}
 	
+	/**
+	 * @author Pol Casals
+	 * @param event
+	 */
 	@FXML
 	private void handleButtonAction(ActionEvent event) {
 		if (event.getSource() == profileBtn) {
@@ -124,10 +124,10 @@ public class MainController {
 			currentMenuLabel.setText("Settings");
 			settingsPane.toFront();
 		} else if (event.getSource() == manageUsersBtn){
-			currentMenuLabel.setText("Admin Tools > Manage Users");
+			currentMenuLabel.setText("Admin Tools - Manage Users");			
 			userManagerPane.toFront();
 		} else if (event.getSource() == manageBooksBtn){
-			currentMenuLabel.setText("Admin Tools > Manage Books");
+			currentMenuLabel.setText("Admin Tools - Manage Books");
 			bookManagerPane.toFront();
 		} else {
 			currentMenuLabel.setText("Home");
@@ -135,6 +135,52 @@ public class MainController {
 		}
 	}
 	
+	/**
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
+	public User getCurrentUser() throws IOException {
+		Response<User> findUser = dbcs.findByUsername(Tools.getUsernameFromToken(token)).execute();
+    	if (findUser != null) {    
+        	return findUser.body();
+    	}
+    	return null;
+	}
+	
+	/**
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
+	public ObservableList<User> getUsers() throws IOException {
+		Response<ArrayList<User>> findUsers = dbcs.getUsers().execute();		
+		for (User user : findUsers.body()) {
+			updatedUsers.add(user);
+		}		
+		return updatedUsers;
+	}
+	
+	/**
+	 * @author Pol Casals
+	 */
+	public void populateUsersTable() {
+		idColumn.setCellValueFactory(new PropertyValueFactory<User, String>(String.valueOf("id")));
+		usernameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
+		passwordColumm.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
+		emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+		firstNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+		lastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+		roleColumn.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
+		userTable.getItems().setAll(updatedUsers);
+		
+		for (TableColumn c : userTable.getColumns().subList(1, userTable.getColumns().size())) {
+			c.setCellFactory(TextFieldTableCell.forTableColumn());
+		}
+	}
+	
+	/**
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
 	public void getBooks() throws IOException {			
 		Response<ArrayList<Book>> bookRes = dbcs.getBooks().execute();		
 		for (Book book : bookRes.body()) {
@@ -144,6 +190,10 @@ public class MainController {
 		showBooks();
 	}
 	
+	/**
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
 	public void showBooks() throws IOException {
 		grid.getChildren().clear();
 		int column = 0;
@@ -155,30 +205,21 @@ public class MainController {
 			AnchorPane anchorPane = loader.load();			
 			BookController bookController = loader.getController();
 			bookController.setData(books.get(i));			
-			if (column == 4) {
+			if (column == 3) {
 				column = 0;
 				row++;
-			}
-			
+			}			
 			grid.add(anchorPane, column++, row);
-			GridPane.setMargin(anchorPane, new Insets(10));
+			GridPane.setMargin(anchorPane, new Insets(50, 25, 25, 60));
 		}
 		books.clear();
 		updatedBooks.clear();		
-	}
+	}	
 	
-	public void showUsersTable() {
-		idColumn.setCellValueFactory(new PropertyValueFactory<User, Long>("id"));
-		usernameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-		passwordColumm.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
-		emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-		firstNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
-		lastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
-		roleColumn.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
-
-		userTable.setItems(updatedUsers);
-	}
-	
+	/**
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
 	public void logout() throws IOException {
 		Alert logoutConfirmation = Tools.confirmationAlert(closeBtn.getScene().getWindow(),
 				"Logout", "Are you sure you want to logout from Bookaro?");
@@ -194,6 +235,11 @@ public class MainController {
 		}		
 	}
 	
+	/**
+	 * @author Pol Casals
+	 * @param event
+	 * @throws IOException
+	 */
 	public void close (ActionEvent event) throws IOException {
 		Platform.exit();
 	}

@@ -171,12 +171,12 @@
                   <Insets right="20.0" top="10.0" />
                </StackPane.margin>
             </Button>
-            <ComboBox maxHeight="40.0" maxWidth="150.0" StackPane.alignment="TOP_LEFT">
+            <ComboBox fx:id="bookSearchBy" maxHeight="40.0" maxWidth="150.0" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
                   <Insets left="15.0" top="10.0" />
                </StackPane.margin>
             </ComboBox>
-            <TextField maxHeight="40.0" maxWidth="750.0" StackPane.alignment="TOP_LEFT">
+            <TextField fx:id="bookSearchBar" maxHeight="40.0" maxWidth="750.0" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
                   <Insets left="165.0" top="10.0" />
                </StackPane.margin>

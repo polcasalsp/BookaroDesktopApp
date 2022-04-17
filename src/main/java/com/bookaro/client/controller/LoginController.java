@@ -47,9 +47,10 @@ public class LoginController {
 	@FXML 
 	private BorderPane bp;
 	
-	private String token = "";
-	
 	/**
+	 * Verifica y envia los datos que el usuario introduce 
+	 * en el formulario al servicio de login y recupera el token
+	 * recibido del servidor.
 	 * @author Pol Casals
 	 * @param event
 	 * @throws IOException
@@ -57,8 +58,8 @@ public class LoginController {
 	
 	@FXML
 	private void login (ActionEvent event) throws IOException {
-		
-		Window owner = loginBtn.getScene().getWindow();		
+		String token = "";
+		Window owner = loginBtn.getScene().getWindow();
 		
 		if (usernameField.getText().isEmpty()) {
             Tools.showAlert(Alert.AlertType.ERROR, owner, "Username Error", "Please enter username");
@@ -79,22 +80,30 @@ public class LoginController {
 		} catch (ConnectException e) {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Connection Error", "Refused Connection");
 		}
-        checkLoginChangeScene();        
-	}
-	
-	private void checkLoginChangeScene() throws IOException {
-		if (token != "") {
-        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
-        	Parent mainScreen = loader.load();
-            Stage stage = (Stage)loginBtn.getScene().getWindow();
-            Scene scene = new Scene(mainScreen, 1280, 800);
-            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-            Tools.draggableWindow(stage, mainScreen);
-            stage.setScene(scene);
-        }     
+        if (token != "") {
+        	checkLoginChangeScene(); 
+        }
 	}
 	
 	/**
+	 * Si las credenciales son correctas y por tanto
+	 * se ha recibido un token del servidor, procede
+	 * a cambiar la escena a la vista principal.
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
+	private void checkLoginChangeScene() throws IOException {		
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
+    	Parent mainScreen = loader.load();
+        Stage stage = (Stage)loginBtn.getScene().getWindow();
+        Scene scene = new Scene(mainScreen, 1280, 800);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Tools.draggableWindow(stage, mainScreen);
+        stage.setScene(scene);	            
+	}
+	
+	/**
+	 * Escucha al evento del boton de cerrar ventana.
 	 * @author Pol Casals
 	 * @param event
 	 * @throws IOException

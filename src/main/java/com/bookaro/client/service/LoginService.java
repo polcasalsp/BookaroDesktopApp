@@ -32,32 +32,40 @@ public class LoginService {
     /**
      * @author Pol Casals
      * @param username
+     * El valor del campo Usuario en la vista login, introducido por el usuario
+     * que solicita el inicio de sesión.
      * @param pw
-     * @return
+     * El valor del campo Contraseña en la vista login, introducido por el usuario
+     * que solicita el inicio de sesión.
      * @throws IOException
      */
     public void sendCredentials(String username, String pw) throws IOException {
-    	String formattedCredentials = userCredentials(username, pw);
+    	String formattedCredentials = jsonUserCredentials(username, pw);
     	post(serverUrl + "/api/services/controller/user/login", formattedCredentials);
     }   
     
     
   	/**
+  	 * Recibe las credenciales introducidas por el usuario y les da 
+  	 * formato JSON para que el servidor las pueda interpretar y validar.
   	 * @author Pol Casals
   	 * @param username
   	 * @param pw
-  	 * @return
   	 */
-      public String userCredentials(String username, String pw) {
+      public String jsonUserCredentials(String username, String pw) {
       	return "{\"username\":\""+username+"\","
       			+ "\"password\":\""+pw+"\""+"}";
       }   
 
     /**
+     * Crea una petición con las credenciales recibidas y formateadas,
+     * es enviada al servidor {@url} y se espera recibir el token JWT 
+     * en la respuesta.
      * @author Pol Casals
      * @param url
+     * Es la dirección del servidor.
      * @param formattedCredentials
-     * @return
+     * Credenciales correctamente formateadas que recibirá el servidor.
      * @throws IOException
      * @throws InterruptedException 
      */
@@ -73,6 +81,6 @@ public class LoginService {
       }
 	
 	 public String getToken() {
-	    	return token;
-	    }
+    	 return token;
+     }
 }	

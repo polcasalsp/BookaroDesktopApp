@@ -24,12 +24,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
@@ -41,7 +43,7 @@ import retrofit2.Response;
 /**
  * 
  * @author Pol Casals
- *@
+ *
  */
 public class MainController {
 	
@@ -66,6 +68,12 @@ public class MainController {
 	@FXML
 	private Pane homePane, booksPane, settingsPane, profilePane, userManagerPane, bookManagerPane;
 	
+	@FXML
+	private ComboBox<String> bookSearchBy;
+	
+	@FXML
+	private TextField bookSearchBar;
+	
     @FXML
     private GridPane grid;
 
@@ -88,6 +96,8 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		homePane.toFront();
+		bookSearchBy.getItems().addAll("name", "author", "isbn", "category", "editorial");
+		bookSearchBy.setValue("name");
 		Platform.runLater(new Runnable() {
             @Override
             public void run() {	
@@ -109,6 +119,8 @@ public class MainController {
 	}
 	
 	/**
+	 * Maneja los eventos de click en los diferentes botones de la 
+	 * vista principal.
 	 * @author Pol Casals
 	 * @param event
 	 */
@@ -136,6 +148,8 @@ public class MainController {
 	}
 	
 	/**
+	 * Recupera el usuario actualmente autenticado en el servidor
+	 * y lo devuelve. Si no se puede encontrar devuelve null.
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
@@ -148,6 +162,8 @@ public class MainController {
 	}
 	
 	/**
+	 * Recupera la lista completa de usuarios en el servidor
+	 * y la devuelve.
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
@@ -160,6 +176,11 @@ public class MainController {
 	}
 	
 	/**
+	 * Proporciona a cada celda el valor que corresponde a un objeto
+	 * de la clase User con el metodo de {@link TableColumn}
+	 * {@link TableColumn#cellValueFactoryProperty() cell value factory}
+	 * e indica el tipo de dato que se representa en cada celda y de que
+	 * tipo de objeto proviene: <Tipo de objeto(User), Tipo de dato(String)>.
 	 * @author Pol Casals
 	 */
 	public void populateUsersTable() {
@@ -178,19 +199,62 @@ public class MainController {
 	}
 	
 	/**
+	 * Filtra las búsquedas de libros por diferentes criterios
+	 * @implNote En un futuro se debera filtrar en el backend
+	 * para evitar enviar y recibir mas datos de los necesarios
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
 	public void getBooks() throws IOException {			
 		Response<ArrayList<Book>> bookRes = dbcs.getBooks().execute();		
 		for (Book book : bookRes.body()) {
-			updatedBooks.add(book);
+			switch(bookSearchBy.getValue()) {
+			
+			case("name"):
+				
+				if (book.getName().toLowerCase()
+					.contains(bookSearchBar.getText().toLowerCase())) {	
+					updatedBooks.add(book);
+				}	
+				break;							
+			case("author"):		
+				
+				if (book.getAuthor().toLowerCase()
+					.contains(bookSearchBar.getText().toLowerCase())) {	
+					updatedBooks.add(book);
+				}
+				break;							
+			case("isbn"):		
+				
+				if (book.getName().toLowerCase()
+					.contains(bookSearchBar.getText().toLowerCase())) {	
+					updatedBooks.add(book);
+				}
+				break;							
+			case("category"):	
+				
+				if (book.getName().toLowerCase()
+					.contains(bookSearchBar.getText().toLowerCase())) {	
+					updatedBooks.add(book);
+				}
+				break;							
+			case("editorial"):	
+				
+				if (book.getName().toLowerCase()
+					.contains(bookSearchBar.getText().toLowerCase())) {	
+					updatedBooks.add(book);
+				}
+				break;
+			}					
 		}		
 		books.addAll(updatedBooks);
 		showBooks();
 	}
 	
 	/**
+	 * Crea una vista para cada libro encontrado con los criterios
+	 * de búsqueda y la añade al Gridpane que se va a mostrar en 
+	 * una disposición vertical de (n columnas (atributo column) x n filas (las necesarias))
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
@@ -217,6 +281,11 @@ public class MainController {
 	}	
 	
 	/**
+	 * Verifica con una notificación que precisa que el usuario acepte 
+	 * previamente, y si se da el caso se procede a cerrar la sesión
+	 * @implNote Falta la llamada de un metodo que avise al servidor
+	 * para que desactive/liste el token para que no se pueda volver a 
+	 * utilizar.
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
@@ -236,6 +305,7 @@ public class MainController {
 	}
 	
 	/**
+	 * Escucha al evento del boton de cerrar ventana.
 	 * @author Pol Casals
 	 * @param event
 	 * @throws IOException

@@ -10,6 +10,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
+ * Lista de llamadas al servidor para recuperar los datos
+ * que precisen las vistas para rellenar los campos/tablas.
  * @author Pol Casals
  *
  */

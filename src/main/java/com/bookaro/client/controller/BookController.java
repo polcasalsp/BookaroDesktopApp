@@ -24,6 +24,8 @@ public class BookController {
 	private Book book;
     
     /**
+     * Pasa a la vista individual los atributos de cada libro que
+     * se va a mostrar en la lista de búsqueda.
      * @author Pol Casals
      * @param book
      */

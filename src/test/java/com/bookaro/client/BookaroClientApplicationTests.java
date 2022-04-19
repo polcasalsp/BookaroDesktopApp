@@ -18,6 +18,7 @@ class BookaroClientApplicationTests {
 
 	private DBCallService dbcs;
 	private LoginService loginService;
+	
 	@Test
 	void contextLoads() throws IOException {
 		loginService = LoginService.getLogin();

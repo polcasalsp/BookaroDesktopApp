@@ -193,9 +193,10 @@ public class MainController {
 		roleColumn.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
 		userTable.getItems().setAll(updatedUsers);
 		
-		for (TableColumn c : userTable.getColumns().subList(1, userTable.getColumns().size())) {
-			c.setCellFactory(TextFieldTableCell.forTableColumn());
+		for (TableColumn col : userTable.getColumns().subList(1, userTable.getColumns().size())) {
+			col.setCellFactory(TextFieldTableCell.forTableColumn());
 		}
+		
 	}
 	
 	/**

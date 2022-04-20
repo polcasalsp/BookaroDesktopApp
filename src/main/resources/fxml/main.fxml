@@ -166,21 +166,6 @@
                   </ScrollPane>
                </children>
             </HBox>
-            <Button fx:id="getUsersBtn" maxHeight="40.0" maxWidth="120.0" mnemonicParsing="false" onAction="#getBooks" styleClass="mfx-button" stylesheets="@../style.css" text="Search" StackPane.alignment="TOP_RIGHT">
-               <StackPane.margin>
-                  <Insets right="20.0" top="10.0" />
-               </StackPane.margin>
-            </Button>
-            <ComboBox maxHeight="40.0" maxWidth="150.0" StackPane.alignment="TOP_LEFT">
-               <StackPane.margin>
-                  <Insets left="15.0" top="10.0" />
-               </StackPane.margin>
-            </ComboBox>
-            <TextField maxHeight="40.0" maxWidth="750.0" StackPane.alignment="TOP_LEFT">
-               <StackPane.margin>
-                  <Insets left="165.0" top="10.0" />
-               </StackPane.margin>
-            </TextField>
          </children>
       </StackPane>
    </children>

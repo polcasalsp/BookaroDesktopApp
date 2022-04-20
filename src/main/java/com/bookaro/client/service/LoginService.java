@@ -27,18 +27,21 @@ public class LoginService {
 		return loginService;    	
     }
     
+	
+	 public String getToken() {
+	    	return token;
+	 }
    
     
     /**
      * @author Pol Casals
      * @param username
      * @param pw
-     * @return
      * @throws IOException
      */
     public void sendCredentials(String username, String pw) throws IOException {
     	String formattedCredentials = userCredentials(username, pw);
-    	post(serverUrl + "/api/services/controller/user/login", formattedCredentials);
+    	postLogin(serverUrl + "/api/user/login", formattedCredentials);
     }   
     
     
@@ -46,7 +49,6 @@ public class LoginService {
   	 * @author Pol Casals
   	 * @param username
   	 * @param pw
-  	 * @return
   	 */
       public String userCredentials(String username, String pw) {
       	return "{\"username\":\""+username+"\","
@@ -57,22 +59,21 @@ public class LoginService {
      * @author Pol Casals
      * @param url
      * @param formattedCredentials
-     * @return
      * @throws IOException
      * @throws InterruptedException 
      */
-      public void post(String url, String formattedCredentials) throws IOException {
+      public void postLogin(String url, String formattedCredentials) throws IOException {
       	RequestBody body = RequestBody.create(JSON, formattedCredentials);
       	Request request = new Request.Builder()
           .url(url)
           .post(body)
           .build();
   	    try (Response response = client.newCall(request).execute()) {
-  	    	token = response.body().string();
+  	    	token = response.body().string().split(" ")[1];
   	    }
       }
-	
-	 public String getToken() {
-	    	return token;
-	    }
+      
+      public void logout() {
+    	  token = "";
+      }
 }	

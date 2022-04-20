@@ -79,7 +79,8 @@ public class LoginController {
 		} catch (ConnectException e) {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Connection Error", "Refused Connection");
 		}
-        checkLoginChangeScene();        
+        checkLoginChangeScene();  
+        
 	}
 	
 	private void checkLoginChangeScene() throws IOException {

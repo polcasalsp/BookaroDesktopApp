@@ -27,6 +27,9 @@ public class LoginService {
 		return loginService;    	
     }
     
+	 public String getToken() {
+    	 return token;
+     }
    
     
     /**
@@ -39,9 +42,9 @@ public class LoginService {
      * que solicita el inicio de sesión.
      * @throws IOException
      */
-    public void sendCredentials(String username, String pw) throws IOException {
-    	String formattedCredentials = jsonUserCredentials(username, pw);
-    	post(serverUrl + "/api/services/controller/user/login", formattedCredentials);
+    public void sendUserCredentials(String username, String pw) throws IOException {
+    	String formattedCredentials = userCredentials(username, pw);
+    	postLogin(serverUrl + "/api/user/login", formattedCredentials);
     }   
     
     
@@ -52,7 +55,7 @@ public class LoginService {
   	 * @param username
   	 * @param pw
   	 */
-      public String jsonUserCredentials(String username, String pw) {
+      public String userCredentials(String username, String pw) {
       	return "{\"username\":\""+username+"\","
       			+ "\"password\":\""+pw+"\""+"}";
       }   
@@ -69,18 +72,18 @@ public class LoginService {
      * @throws IOException
      * @throws InterruptedException 
      */
-      public void post(String url, String formattedCredentials) throws IOException {
+      public void postLogin(String url, String formattedCredentials) throws IOException {
       	RequestBody body = RequestBody.create(JSON, formattedCredentials);
       	Request request = new Request.Builder()
           .url(url)
           .post(body)
           .build();
   	    try (Response response = client.newCall(request).execute()) {
-  	    	token = response.body().string();
+  	    	token = response.body().string().split(" ")[1];
   	    }
       }
-	
-	 public String getToken() {
-    	 return token;
-     }
+      
+      public void logout() {
+    	  token = "";
+      }
 }	

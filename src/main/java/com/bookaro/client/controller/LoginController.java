@@ -73,7 +73,7 @@ public class LoginController {
         
         try {			
 		    LoginService loginService = LoginService.getLogin();
-		    loginService.sendCredentials(usernameField.getText(), passwordField.getText());		
+		    loginService.sendUserCredentials(usernameField.getText(), passwordField.getText());		
 		    token = loginService.getToken();
 		} catch (ArrayIndexOutOfBoundsException e) {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Credentials Error", "Incorrect username/password combination");
@@ -81,7 +81,7 @@ public class LoginController {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Connection Error", "Refused Connection");
 		}
         if (token != "") {
-        	checkLoginChangeScene(); 
+        	changeScene(); 
         }
 	}
 	
@@ -92,7 +92,7 @@ public class LoginController {
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
-	private void checkLoginChangeScene() throws IOException {		
+	private void changeScene() throws IOException {		
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
     	Parent mainScreen = loader.load();
         Stage stage = (Stage)loginBtn.getScene().getWindow();

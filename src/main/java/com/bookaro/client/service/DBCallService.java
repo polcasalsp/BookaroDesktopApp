@@ -7,6 +7,7 @@ import com.bookaro.client.model.Book;
 import com.bookaro.client.model.User;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -17,15 +18,18 @@ import retrofit2.http.Path;
  */
 public interface DBCallService {	
 	
-	@GET("/api/services/controller/users")
+	@GET("/api/user/all")
 	Call<ArrayList<User>> getUsers();
 
-	@GET("/api/services/controller/users/id/{user_id}")
-	Call<User> findById(@Path(value = "user_id", encoded = true) int userId);
+	@GET("/api/user/{id}")
+	Call<User> findById(@Path(value = "id", encoded = true) int userId);
 	
-	@GET("/api/services/controller/users/username/{name}")
+	@GET("/api/user/username/{name}")
 	Call<User> findByUsername(@Path(value = "name", encoded = true) String username);
 	
 	@GET("/api/book")
 	Call<ArrayList<Book>> getBooks();
+	
+	@POST("/api/user/logout") 
+	Call<String> logout();
 }

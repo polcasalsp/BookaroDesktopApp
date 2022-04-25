@@ -71,7 +71,7 @@ public class Tools {
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 		String payload = new String(decoder.decode(chunks[1]));
 		JSONObject jsonPayload = new JSONObject(payload);
-		JSONArray authorities = jsonPayload.getJSONArray("authorities");
+		JSONArray authorities = jsonPayload.getJSONArray("role");
 		return authorities.get(0).toString();
     }
     

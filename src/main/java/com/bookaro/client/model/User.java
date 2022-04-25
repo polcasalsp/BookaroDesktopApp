@@ -9,8 +9,8 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
-	private String firstName;
-	private String lastName;
+	private String name;
+	private String surname;
 	private String role;
 		
 	/**
@@ -23,15 +23,15 @@ public class User {
 	 * @param lastName
 	 * @param role
 	 */
-	public User(Long id, String username, String password, String email, String firstName, String lastName,
+	public User(Long id, String username, String password, String email, String name, String surname,
 			String role) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
+		this.surname = surname;
 		this.role = role;
 	}	
 	
@@ -112,32 +112,32 @@ public class User {
 	 * @author Pol Casals
 	 * @return
 	 */
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 	
 	/**
 	 * @author Pol Casals
 	 * @param firstName
 	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	/**
 	 * @author Pol Casals
 	 * @return
 	 */
-	public String getLastName() {
-		return lastName;
+	public String getSurname() {
+		return surname;
 	}
 	
 	/**
 	 * @author Pol Casals
 	 * @param lastName
 	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 	
 	/**

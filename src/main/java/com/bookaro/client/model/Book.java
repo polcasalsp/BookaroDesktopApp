@@ -151,7 +151,7 @@ public class Book {
 	public void setSynopsis(String synopsis) {
 		this.synopsis = synopsis;
 	}
-
+	
 	/*public Order getOrderBook() {
 		return orderBook;
 	}

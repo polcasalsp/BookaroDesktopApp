@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.bookaro.client.Utils.RetrofitClient;
 import com.bookaro.client.Utils.Tools;
+import com.bookaro.client.model.Client;
 import com.bookaro.client.model.User;
 import com.bookaro.client.service.DBCallService;
 import com.bookaro.client.service.LoginService;
+import com.bookaro.client.service.NetClientsService;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -24,7 +25,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,17 +40,13 @@ import retrofit2.Response;
  */
 public class MainController {
 	
-	@FXML
-	private TableView<User> userTable;
 	
-	@FXML
-	private TableColumn<User, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, roleColumn, idColumn;
 	
 	@FXML
 	private Label currentMenuLabel, currentUsernameLabel;
 	
 	@FXML
-	private Button closeBtn, getUsersBtn, logoutBtn, settingsBtn, booksBtn, homeBtn, profileBtn;
+	private Button closeBtn, logoutBtn, settingsBtn, booksBtn, homeBtn, profileBtn;
 	
 	@FXML
 	private MenuButton adminTools;
@@ -60,13 +56,8 @@ public class MainController {
 	
 	@FXML
 	private Pane homePane, booksPane, settingsPane, profilePane, userManagerPane, bookManagerPane;
-
-    @FXML
-    private ScrollPane scroll;
-    
-    private String token = LoginService.getLogin().getToken();
 	
-	private ObservableList<User> updatedUsers = FXCollections.observableArrayList();
+	
 	
 	private DBCallService dbcs;
 	
@@ -80,15 +71,13 @@ public class MainController {
             @Override
             public void run() {	
             	try {
-					dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
-					User currentUser = getCurrentUser();
-					profileBtn.setText(currentUser.getName() + " " + currentUser.getSurname()); 
-	            	
-	            	if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
-	            		adminTools.visibleProperty().set(true);		
-	            		getUsers();
-	            		populateUsersTable();
-	            	}
+            		String token = LoginService.getLogin().getToken();
+					dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
+					User currentUser = getCurrentUser(token);
+					profileBtn.setText(currentUser.getName() + " " + currentUser.getSurname());
+					if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
+			    		adminTools.visibleProperty().set(true);		
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}              	          	
@@ -131,7 +120,7 @@ public class MainController {
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
-	public User getCurrentUser() throws IOException {
+	public User getCurrentUser(String token) throws IOException {
 		Response<User> findUser = dbcs.findByUsername(Tools.getUsernameFromToken(token)).execute();
     	if (findUser != null) {    
         	return findUser.body();
@@ -139,43 +128,7 @@ public class MainController {
     	return null;
 	}
 	
-	/**
-	 * Recupera la lista completa de usuarios en el servidor
-	 * y la devuelve.
-	 * @author Pol Casals
-	 * @throws IOException
-	 */
-	public ObservableList<User> getUsers() throws IOException {
-		Response<ArrayList<User>> findUsers = dbcs.getUsers().execute();		
-		for (User user : findUsers.body()) {
-			updatedUsers.add(user);
-		}		
-		return updatedUsers;
-	}
 	
-	/**
-	 * Proporciona a cada celda el valor que corresponde a un objeto
-	 * de la clase User con el metodo de {@link TableColumn}
-	 * {@link TableColumn#cellValueFactoryProperty() cell value factory}
-	 * e indica el tipo de dato que se representa en cada celda y de que
-	 * tipo de objeto proviene: <Tipo de objeto(User), Tipo de dato(String)>.
-	 * @author Pol Casals
-	 */
-	public void populateUsersTable() {
-		idColumn.setCellValueFactory(new PropertyValueFactory<User, String>(String.valueOf("id")));
-		usernameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-		passwordColumm.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
-		emailColumn.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-		firstNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
-		lastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("surname"));
-		roleColumn.setCellValueFactory(new PropertyValueFactory<User, String>("role"));
-		userTable.getItems().setAll(updatedUsers);
-		
-		for (TableColumn col : userTable.getColumns().subList(1, userTable.getColumns().size())) {
-			col.setCellFactory(TextFieldTableCell.forTableColumn());
-		}
-		
-	}
 	
 	/**
 	 * Verifica con una notificación que precisa que el usuario acepte 
@@ -191,6 +144,8 @@ public class MainController {
 				"Logout", "Are you sure you want to logout from Bookaro?");
 		Optional<ButtonType> result = logoutConfirmation.showAndWait();
 		if (result.get() == ButtonType.OK) {
+			dbcs.logout();
+			LoginService.getLogin().logout();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
 	        Parent loginScreen = loader.load();
 	        Stage stage = (Stage)logoutBtn.getScene().getWindow();

@@ -134,23 +134,10 @@
                </graphic>
             </Button>
          </children></Pane>
-      <Pane fx:id="bookManagerPane" layoutX="200.0" layoutY="150.0" prefHeight="650.0" prefWidth="1080.0" styleClass="pane" />
       <Pane fx:id="profilePane" layoutX="200.0" layoutY="150.0" prefHeight="650.0" prefWidth="1080.0" styleClass="pane" />
       <Pane fx:id="booksPane" layoutX="200.0" layoutY="150.0" prefHeight="650.0" prefWidth="1080.0" styleClass="pane" />
-      <Pane fx:id="userManagerPane" layoutX="200.0" layoutY="150.0" prefHeight="650.0" prefWidth="1080.0" styleClass="pane">
-         <children>
-            <TableView fx:id="userTable" editable="true" prefHeight="550.0" prefWidth="1080.0">
-              <columns>
-                  <TableColumn fx:id="idColumn" maxWidth="30" prefWidth="30.0" text="Id" />
-                  <TableColumn fx:id="usernameColumn" prefWidth="175.0" text="username" />
-                  <TableColumn fx:id="passwordColumm" prefWidth="175.0" text="password" />
-                  <TableColumn fx:id="emailColumn" prefWidth="175.0" text="email" />
-                  <TableColumn fx:id="firstNameColumn" prefWidth="175.0" text="first name" />
-                  <TableColumn fx:id="lastNameColumn" prefWidth="175.0" text="last name" />
-                  <TableColumn fx:id="roleColumn" prefWidth="175.0" text="role" />
-              </columns>
-            </TableView>
-         </children></Pane>
-   </children>
-   <fx:include source="home.fxml" fx:id="homePane" />
+      <fx:include source="bookManager.fxml" fx:id="bookManagerPane" />
+	  <fx:include source="userManager.fxml" fx:id="userManagerPane" />
+      <fx:include source="home.fxml" fx:id="homePane" />   
+   </children>   
 </Pane>

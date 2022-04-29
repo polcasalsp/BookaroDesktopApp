@@ -5,10 +5,10 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.bookaro.client.Utils.RetrofitClient;
 import com.bookaro.client.Utils.Tools;
 import com.bookaro.client.service.DBCallService;
 import com.bookaro.client.service.LoginService;
+import com.bookaro.client.service.NetClientsService;
 
 
 @SpringBootTest
@@ -28,7 +28,7 @@ class BookaroClientApplicationTests {
 	void getAllUsersPermissionTestAdmin() throws IOException {
 		loginService = LoginService.getLogin();
 		loginService.sendUserCredentials("admin", "admin");
-		dbcs = RetrofitClient.getClient(loginService.getToken()).create(DBCallService.class);
+		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 		assert dbcs.getUsers().execute().code() == 200;
 	}	
 	
@@ -43,7 +43,7 @@ class BookaroClientApplicationTests {
 	void getAllUsersPermissionTestUser() throws IOException {
 		loginService = LoginService.getLogin();
 		loginService.sendUserCredentials("cliente1", "1234");
-		dbcs = RetrofitClient.getClient(loginService.getToken()).create(DBCallService.class);
+		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 		assert dbcs.getUsers().execute().code() == 403;
 	}
 	
@@ -75,7 +75,7 @@ class BookaroClientApplicationTests {
 		loginService.sendUserCredentials("admin", "admin");
 		String token = loginService.getToken();
 		assert !token.equals("");
-		dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
+		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 		assert dbcs.getUsers().execute().code() == 200;
 		dbcs.logout().execute();
 		assert dbcs.getUsers().execute().code() == 403;
@@ -91,7 +91,7 @@ class BookaroClientApplicationTests {
 		loginService = LoginService.getLogin();
 		loginService.sendUserCredentials("admin", "admin");
 		String token = loginService.getToken();
-		dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
+		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 		assert !token.equals("");
 		loginService.logout();
 		token = loginService.getToken();

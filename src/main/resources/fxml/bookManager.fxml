@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.BookManagerController" layoutX="200.0" layoutY="150.0" prefHeight="650.0" prefWidth="1080.0" styleClass="pane">
+<children>
+   <TableView fx:id="userTable" editable="true" prefHeight="550.0" prefWidth="1080.0">
+     <columns>
+         <TableColumn fx:id="idColumn" maxWidth="30" prefWidth="30.0" text="Id" />
+         <TableColumn fx:id="nameColumn" prefWidth="175.0" text="name" />
+         <TableColumn fx:id="authorColumn" prefWidth="175.0" text="author" />
+         <TableColumn fx:id="isbnColumn" prefWidth="175.0" text="isbn" />
+         <TableColumn fx:id="categoryColumn" prefWidth="175.0" text="category" />
+         <TableColumn fx:id="editorialColumn" prefWidth="175.0" text="editorial" />
+         <TableColumn fx:id="synopsisColumn" prefWidth="175.0" text="synopsis" />
+     </columns>
+   </TableView>
+</children></Pane>

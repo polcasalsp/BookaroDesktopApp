@@ -6,17 +6,22 @@ import java.util.List;
 
 import com.bookaro.client.model.Book;
 import com.bookaro.client.service.DBCallService;
+import com.bookaro.client.service.NetClientsService;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import retrofit2.Response;
+
+
 
 public class HomeController {
 	
@@ -28,6 +33,12 @@ public class HomeController {
 		
     @FXML
     private GridPane grid;
+    
+    @FXML
+    private Button getBooksBtn;
+    
+    @FXML
+    private ScrollPane scroll;
 	
 	private DBCallService dbcs;
     
@@ -50,6 +61,9 @@ public class HomeController {
 	 * @throws IOException
 	 */
 	public void getBooks() throws IOException {			
+		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
+	
+	
 		Response<ArrayList<Book>> bookRes = dbcs.getBooks().execute();		
 		for (Book book : bookRes.body()) {
 			switch(bookSearchBy.getValue()) {

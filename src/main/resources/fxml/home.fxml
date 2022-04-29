@@ -26,7 +26,7 @@
             </ScrollPane>
          </children>
       </HBox>
-      <Button fx:id="getUsersBtn" maxHeight="40.0" maxWidth="120.0" mnemonicParsing="false" onAction="#getBooks" styleClass="mfx-button" stylesheets="@../style.css" text="Search" StackPane.alignment="TOP_RIGHT">
+      <Button fx:id="getBooksBtn" maxHeight="40.0" maxWidth="120.0" mnemonicParsing="false" onAction="#getBooks" styleClass="mfx-button" stylesheets="@../style.css" text="Search" StackPane.alignment="TOP_RIGHT">
          <StackPane.margin>
             <Insets right="20.0" top="10.0" />
          </StackPane.margin>

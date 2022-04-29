@@ -1,4 +1,4 @@
-package com.bookaro.client.Utils;
+package com.bookaro.client.service;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * @author Pol Casals
  *
  */
-public class RetrofitClient {
+public class NetClientsService {
 	
 	private static Retrofit retrofit = null;
 	private final static String serverUrl = "http://127.0.0.1:8080";
@@ -27,35 +27,43 @@ public class RetrofitClient {
 	/**
 	 * Crea una instancia de Interceptor que será responsable de incluir
 	 * el token JWT recibido como parámetro a todas las futuras peticiones
-	 * al servidor, lo incluye al cliente http y finalmente se construye una
-	 * instancia de retrofit que usa el cliente http y un conversor de Objetos
-	 * a JSON y viceversa para el intercambio de datos y realización de peticiones
-	 * cliente-servidor.
+	 * al servidor y lo incluye al cliente http
 	 * @author Pol Casals
-	 * @param token
-	 * Token JWT que envia el servidor como respuesta una vez ha recibido 
-	 * un conjunto (Usuario y Contraseña) de credenciales correctas.
 	 * @return
-	 * @throws IOException
 	 */
-	public static Retrofit getClient(String token) throws IOException {	
+	public static OkHttpClient getHttpClient() {
 		
-	    //Interceptor that adds JWT token to future requests
+		String token = LoginService.getLogin().getToken();
+		
 	    Interceptor interceptor = new Interceptor() {
 	        @Override
 	        public Response intercept(Chain chain) throws IOException {
-	            Request request = chain.request().newBuilder().addHeader(headerTitle, headerName + token).build();
+	            Request request = chain.request()
+	            		.newBuilder()
+	            		.addHeader(headerTitle, headerName + token)
+	            		.build();
 	            return chain.proceed(request);
 	        }
 	    };
 		
-		//Http client to handle requests and responses to/from server
 		OkHttpClient.Builder builder = new OkHttpClient.Builder();
 		builder.addInterceptor(interceptor);
-		OkHttpClient client = builder.build();		
-		
-		//Json to POJO converter and viceversa
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		OkHttpClient client = builder.build();
+		return client;
+	}
+	
+	/**
+ 	 * Construye una instancia de retrofit que usa el cliente http y un conversor 
+ 	 * de Objetos a JSON y viceversa para el intercambio de datos y realización 
+ 	 * de peticiones cliente-servidor.
+	 * @author Pol Casals
+	 * @return
+	 * @throws IOException
+	 */
+	public static Retrofit getRetrofitClient() throws IOException {			
+		Gson gson = new GsonBuilder().setLenient().setDateFormat("yyyy-MM-dd").create();
+
+		OkHttpClient client = getHttpClient();	
 		
 		retrofit = new Retrofit.Builder()
 				.baseUrl(serverUrl)

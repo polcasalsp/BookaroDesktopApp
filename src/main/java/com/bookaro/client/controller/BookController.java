@@ -1,11 +1,13 @@
 package com.bookaro.client.controller;
 
 import com.bookaro.client.model.Book;
+import com.bookaro.client.service.DBCallService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 
 /**
  * 
@@ -31,7 +33,7 @@ public class BookController {
      */
     public void setData(Book book) {
     	this.book = book;
-    	Image img = new Image("/assets/got.jpg");
+    	Image img = DBCallService.getImageByName("captura.png");
     	nameLabel.setText(book.getName());
     	authorLabel.setText(book.getAuthor());
     	coverImg.setImage(img);

@@ -27,8 +27,42 @@
       </Pane>
       <StackPane layoutX="450.0" prefHeight="600.0" prefWidth="550.0">
          <children>
-            <Pane prefHeight="600.0" prefWidth="535.0" />
-            <Pane prefHeight="600.0" prefWidth="431.0" style="-fx-background-color: #2D3447;">
+            <Pane fx:id="registerPane" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="431.0" style="-fx-background-color: #2D3447;">
+   <children>
+      <MFXTextField fx:id="newUsernameField" floatMode="BORDER" floatingText="Username" layoutX="80.0" layoutY="80.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <MFXPasswordField fx:id="newPasswordField" floatMode="BORDER" floatingText="Password" layoutX="80.0" layoutY="140.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <Label layoutX="80.0" layoutY="10.0" text="Create a new user" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <MFXButton fx:id="createUserBtn" defaultButton="true" layoutX="280.0" layoutY="524.0" onAction="#createUser" prefHeight="62.0" prefWidth="175.0" stylesheets="@../style.css" text="Create" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </MFXButton>
+      <Button fx:id="closeBtn" layoutX="501.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #E81123;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets bottom="1.0" right="1.0" />
+         </padding>
+      </Button>
+      <MFXTextField fx:id="newNameField" floatMode="BORDER" floatingText="Name" layoutX="80.0" layoutY="200.0" prefHeight="50.0" prefWidth="182.5" stylesheets="@../style.css" />
+      <MFXTextField fx:id="newSurnameField" floatMode="BORDER" floatingText="Surname" layoutX="272.5" layoutY="200.0" prefHeight="50.0" prefWidth="182.5" stylesheets="@../style.css" />
+      <MFXTextField fx:id="newDniField" floatMode="BORDER" floatingText="DNI" layoutX="80.0" layoutY="260.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <MFXTextField fx:id="newAdressField" floatMode="BORDER" floatingText="Adress" layoutX="80.0" layoutY="320.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <MFXTextField fx:id="newEmailField" floatMode="BORDER" floatingText="Email" layoutX="80.0" layoutY="440.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <MFXTextField fx:id="newAgeField" floatMode="BORDER" floatingText="Age" layoutX="80.0" layoutY="380.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
+      <MFXButton fx:id="backBtn" defaultButton="true" layoutX="80.0" layoutY="524.0" onAction="#back" prefHeight="62.0" prefWidth="175.0" stylesheets="@../style.css" text="&lt; Back" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </MFXButton>
+   </children>
+</Pane>
+            <Pane fx:id="loginPane" prefHeight="600.0" prefWidth="431.0" style="-fx-background-color: #2D3447;">
                <children>
                   <MFXTextField fx:id="usernameField" floatMode="BORDER" floatingText="Username" layoutX="88.0" layoutY="154.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
                   <MFXPasswordField fx:id="passwordField" floatMode="BORDER" floatingText="Password" layoutX="88.0" layoutY="268.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" />
@@ -37,7 +71,7 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <MFXButton fx:id="registerBtn" layoutX="88.0" layoutY="467.0" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" text="Sign up" textFill="WHITE">
+                  <MFXButton fx:id="registerBtn" layoutX="88.0" layoutY="467.0" onAction="#register" prefHeight="50.0" prefWidth="375.0" stylesheets="@../style.css" text="Sign up" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

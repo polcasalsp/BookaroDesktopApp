@@ -33,7 +33,7 @@ public class BookController {
      */
     public void setData(Book book) {
     	this.book = book;
-    	Image img = DBCallService.getImageByName("captura.png");
+    	Image img = DBCallService.getImageByName("got.png");
     	nameLabel.setText(book.getName());
     	authorLabel.setText(book.getAuthor());
     	coverImg.setImage(img);

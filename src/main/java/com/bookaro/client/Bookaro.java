@@ -1,7 +1,7 @@
 package com.bookaro.client;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.bookaro.client.GUI.BookaroGUI;
+
 import javafx.application.Application;
 
 @SpringBootApplication

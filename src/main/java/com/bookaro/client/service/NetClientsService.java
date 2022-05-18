@@ -1,6 +1,8 @@
 package com.bookaro.client.service;
-
 import java.io.IOException;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,7 +22,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class NetClientsService {
 	
 	private static Retrofit retrofit = null;
-	private final static String serverUrl = "http://127.0.0.1:8080";
+	private final static String serverUrl = "https://127.0.0.1:8443";
 	private final static String headerTitle = "Authorization";
 	private final static String headerName = "Bearer ";
 	
@@ -48,9 +50,17 @@ public class NetClientsService {
 		
 		OkHttpClient.Builder builder = new OkHttpClient.Builder();
 		builder.addInterceptor(interceptor);
+		builder.hostnameVerifier(new HostnameVerifier() {
+		    @Override
+		    public boolean verify(String hostname, SSLSession session) {
+		        return true;
+		    }
+		});
 		OkHttpClient client = builder.build();
 		return client;
 	}
+	
+	
 	
 	/**
  	 * Construye una instancia de retrofit que usa el cliente http y un conversor 

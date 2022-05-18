@@ -1,6 +1,10 @@
 package com.bookaro.client.service;
 
 import java.io.IOException;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,8 +19,8 @@ public class LoginService {
 	
 	private static LoginService loginService = new LoginService();	
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    private final OkHttpClient client = new OkHttpClient();
-    private final String serverUrl = "http://127.0.0.1:8080";
+    private OkHttpClient client = null;
+    private final String serverUrl = "https://127.0.0.1:8443";
     private String token = "";
     
     private LoginService() { }
@@ -76,6 +80,14 @@ public class LoginService {
           .url(url)
           .post(body)
           .build();
+      	OkHttpClient.Builder builder = new OkHttpClient.Builder();
+      	builder.hostnameVerifier(new HostnameVerifier() {
+		    @Override
+		    public boolean verify(String hostname, SSLSession session) {
+		        return true;
+		    }
+		});
+      	client = builder.build();
   	    try (Response response = client.newCall(request).execute()) {
   	    	token = response.body().string().split(" ")[1];
   	    }

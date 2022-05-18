@@ -1,4 +1,4 @@
-package com.bookaro.client.GUI;
+package com.bookaro.client;
 
 import org.springframework.boot.SpringApplication;
 

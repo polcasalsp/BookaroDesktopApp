@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 
 
-public class HomeController {
+public class SearchBooksController {
 	
 	@FXML
 	private ComboBox<String> bookSearchBy;
@@ -62,8 +62,7 @@ public class HomeController {
 	 */
 	public void getBooks() throws IOException {			
 		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
-	
-	
+		
 		Response<ArrayList<Book>> bookRes = dbcs.getBooks().execute();		
 		for (Book book : bookRes.body()) {
 			switch(bookSearchBy.getValue()) {

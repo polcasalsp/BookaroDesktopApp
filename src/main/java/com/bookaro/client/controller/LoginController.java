@@ -99,12 +99,10 @@ public class LoginController {
 		} catch (ConnectException e) {
 			Tools.showAlert(Alert.AlertType.ERROR, owner, "Connection Error", "Refused Connection");
 		}
-<<<<<<< HEAD
-        checkLoginChangeScene();  
-        
+        checkLoginChangeScene(token);    
 	}
 	
-	private void checkLoginChangeScene() throws IOException {
+	private void checkLoginChangeScene(String token) throws IOException {
 		if (token != "") {
         	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
         	Parent mainScreen = loader.load();
@@ -114,11 +112,6 @@ public class LoginController {
             Tools.draggableWindow(stage, mainScreen);
             stage.setScene(scene);
         }     
-=======
-        if (token != "") {
-        	changeScene(); 
-        }
->>>>>>> bookManagement
 	}
 	
 	/**

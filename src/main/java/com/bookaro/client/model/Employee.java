@@ -1,6 +1,5 @@
 package com.bookaro.client.model;
 
-import lombok.EqualsAndHashCode;
 
 /**
  * @author Pedro<br>
@@ -11,7 +10,6 @@ import lombok.EqualsAndHashCode;
  *
  */
 
-@EqualsAndHashCode(callSuper=true)
 public class Employee extends User {
 
 	// ******* Atributos de clase *******

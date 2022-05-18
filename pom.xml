@@ -68,6 +68,14 @@
 		    <artifactId>converter-scalars</artifactId>
 		    <version>2.9.0</version>
 		</dependency>
+<<<<<<< HEAD
+=======
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+>>>>>>> bookManagement
 			
 	</dependencies>
 

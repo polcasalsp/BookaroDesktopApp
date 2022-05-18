@@ -18,11 +18,16 @@ import javafx.stage.Window;
 public class Tools {
 	
 	/**
+	 * Alerta tipo error.
 	 * @author Pol Casals
 	 * @param alertType
+	 * Tipo de la alerta.
 	 * @param owner
+	 * Objeto del que procede la alerta
 	 * @param title
+	 * Titulo de la ventana para la alerta
 	 * @param message
+	 * Mensaje que muestra la alerta al usuario
 	 */
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -34,11 +39,16 @@ public class Tools {
     }
     
     /**
+     * Alerta confirmación necesaria.
      * @author Pol Casals
      * @param owner
+     * Objeto del que procede la alerta
      * @param title
+     * Titulo de la ventana para la alerta
      * @param message
+     * Mensaje que muestra la alerta al usuario
      * @return
+     * Devuelve la alerta para ser mostrada y tratar la respuesta del usuario.
      */
     public static Alert confirmationAlert(Window owner, String title, String message) {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -50,6 +60,8 @@ public class Tools {
     }
     
     /**
+     * Recibe el token en formato String, lo decodifica y
+     * obtiene los roles/derechos del usuario autenticado en el servidor
      * @author Pol Casals
      * @param token
      * @return
@@ -64,6 +76,8 @@ public class Tools {
     }
     
     /**
+     * Recibe el token en formato String, lo decodifica y
+     * obtiene el nombre del usuario autenticado en el servidor
      * @author Pol Casals
      * @param token
      * @return
@@ -77,6 +91,9 @@ public class Tools {
     }
     
     /**
+     * Recibe un objeto Stage y le da la propiedad de poder
+     * ser movido al clickar encima y arrastrarlo con el puntero
+     * del ratón.
      * @author Pol Casals
      * @param stage
      * @param parent

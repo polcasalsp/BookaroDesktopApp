@@ -3,11 +3,11 @@ package com.bookaro.client.controller;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.bookaro.client.Utils.RetrofitClient;
 import com.bookaro.client.Utils.Tools;
 import com.bookaro.client.model.User;
 import com.bookaro.client.service.DBCallService;
 import com.bookaro.client.service.LoginService;
+import com.bookaro.client.service.NetClientsService;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,10 +21,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import retrofit2.Response;
@@ -32,38 +28,24 @@ import retrofit2.Response;
 /**
  * 
  * @author Pol Casals
- *@
+ *
  */
-public class MainController {
-	
-	@FXML
-	private TableView<User> userTable;
-	
-	@FXML
-	private TableColumn<User, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, roleColumn, idColumn;
+public class MainController {	
 	
 	@FXML
 	private Label currentMenuLabel, currentUsernameLabel;
 	
 	@FXML
-	private Button closeBtn, getUsersBtn, logoutBtn, settingsBtn, booksBtn, homeBtn, profileBtn;
+	private Button closeBtn, logoutBtn, subsBtn, booksBtn, homeBtn, manageProfileBtn;
 	
 	@FXML
 	private MenuButton adminTools;
 	
 	@FXML
-	private MenuItem manageUsersBtn, manageBooksBtn;
+	private MenuItem manageClientsBtn, manageEmployeesBtn, manageBooksBtn;
 	
 	@FXML
-	private Pane homePane, booksPane, settingsPane, profilePane, userManagerPane, bookManagerPane;
-	
-    @FXML
-    private GridPane grid;
-
-    @FXML
-    private ScrollPane scroll;
-    
-    private String token = LoginService.getLogin().getToken();
+	private Pane searchBooksPane, homePane, settingsPane, manageProfilePane, clientManagerPane, employeeManagerPane, bookManagerPane;	
 	
 	private DBCallService dbcs;
 	
@@ -73,42 +55,43 @@ public class MainController {
 	@FXML
 	private void initialize() {
 		homePane.toFront();
-		Platform.runLater(new Runnable() {
-            @Override
-            public void run() {	
-            	try {
-					dbcs = RetrofitClient.getClient(token).create(DBCallService.class);
-					User currentUser = getCurrentUser();
-					profileBtn.setText(currentUser.getName() + " " + currentUser.getSurname());
-	            	
-	            	if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
-	            		adminTools.visibleProperty().set(true);		
-	            	}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}              	          	
-            }
-		});		
+		
+    	try {
+    		String token = LoginService.getLogin().getToken();
+			dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
+			User currentUser = getCurrentUser(token);
+			manageProfileBtn.setText(currentUser.getName() + "\n" + currentUser.getSurname());
+			if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
+	    		adminTools.visibleProperty().set(true);		
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	/**
+	 * Maneja los eventos de click en los diferentes botones de la 
+	 * vista principal.
 	 * @author Pol Casals
 	 * @param event
 	 */
 	@FXML
 	private void handleButtonAction(ActionEvent event) {
-		if (event.getSource() == profileBtn) {
-			currentMenuLabel.setText("Profile");
-			profilePane.toFront();
+		if (event.getSource() == manageProfileBtn) {
+			currentMenuLabel.setText("Manage Profile");
+			manageProfilePane.toFront();
 		} else if (event.getSource() == booksBtn) {
-			currentMenuLabel.setText("Books");
-			booksPane.toFront();
-		} else if (event.getSource() == settingsBtn) {
-			currentMenuLabel.setText("Settings");
+			currentMenuLabel.setText("Search Books");
+			searchBooksPane.toFront();
+		} else if (event.getSource() == subsBtn) {
+			currentMenuLabel.setText("Subscriptions");
 			settingsPane.toFront();
-		} else if (event.getSource() == manageUsersBtn){
-			currentMenuLabel.setText("Admin Tools - Manage Users");			
-			userManagerPane.toFront();
+		} else if (event.getSource() == manageClientsBtn){
+			currentMenuLabel.setText("Admin Tools - Manage Clients");			
+			clientManagerPane.toFront();
+		} else if (event.getSource() == manageEmployeesBtn){
+			currentMenuLabel.setText("Admin Tools - Manage Employees");	
+			employeeManagerPane.toFront();
 		} else if (event.getSource() == manageBooksBtn){
 			currentMenuLabel.setText("Admin Tools - Manage Books");
 			bookManagerPane.toFront();
@@ -119,10 +102,12 @@ public class MainController {
 	}
 	
 	/**
+	 * Recupera el usuario actualmente autenticado en el servidor
+	 * y lo devuelve. Si no se puede encontrar devuelve null.
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
-	public User getCurrentUser() throws IOException {
+	public User getCurrentUser(String token) throws IOException {
 		Response<User> findUser = dbcs.findByUsername(Tools.getUsernameFromToken(token)).execute();
     	if (findUser != null) {    
         	return findUser.body();
@@ -132,6 +117,11 @@ public class MainController {
 	
 	
 	/**
+	 * Verifica con una notificación que precisa que el usuario acepte 
+	 * previamente, y si se da el caso se procede a cerrar la sesión
+	 * @implNote Falta la llamada de un metodo que avise al servidor
+	 * para que desactive/liste el token para que no se pueda volver a 
+	 * utilizar.
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
@@ -141,6 +131,7 @@ public class MainController {
 		Optional<ButtonType> result = logoutConfirmation.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			dbcs.logout().execute();
+			LoginService.getLogin().logout();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
 	        Parent loginScreen = loader.load();
 	        Stage stage = (Stage)logoutBtn.getScene().getWindow();
@@ -152,6 +143,7 @@ public class MainController {
 	}
 	
 	/**
+	 * Escucha al evento del boton de cerrar ventana.
 	 * @author Pol Casals
 	 * @param event
 	 * @throws IOException

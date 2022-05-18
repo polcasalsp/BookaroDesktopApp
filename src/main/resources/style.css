@@ -37,3 +37,7 @@
 .pane {
 	-fx-background-color: #b8cdf8;
 }
+
+.main-menu-button {
+	-fx-underline: false;
+}

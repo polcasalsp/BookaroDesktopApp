@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?>
+
+
+<Pane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.ManageSubscriptionsController" layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane">
+<children>
+   <MFXButton fx:id="selectBasicBtn" onAction="#selectHandle" layoutX="233.0" layoutY="581.0" text="Select Basic Subscription">
+      <font>
+         <Font name="System Bold" size="15.0" />
+      </font>
+   </MFXButton>
+   <MFXButton fx:id="selectFamiliarBtn" onAction="#selectHandle" layoutX="622.0" layoutY="581.0" text="Select Familiar Subscription" />
+   <Pane layoutX="174.0" layoutY="58.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #2D3447, #1B69D6); -fx-background-radius: 15;">
+      <children>
+         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="64.0" prefWidth="322.0" text="Basic subscription" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="36.0" />
+            </font>
+         </Label>
+         <Label layoutX="61.0" layoutY="211.0" text="• 2 monthly books&#10;&#10;• Shipment included&#10;&#10;• " textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font></Label>
+         <Label layoutX="61.0" layoutY="78.0" text="20€" textFill="WHITE">
+            <font>
+               <Font name="System Bold Italic" size="64.0" />
+            </font>
+         </Label>
+         <Label layoutX="190.0" layoutY="125.0" text="every month" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
+   <Pane layoutX="574.0" layoutY="58.0" prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #2D3447, #1B69D6); -fx-background-radius: 15;">
+      <children>
+         <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="64.0" prefWidth="336.0" text="Familiar subscription" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="36.0" />
+            </font>
+         </Label>
+         <Label layoutX="61.0" layoutY="211.0" text="• 4 monthly books&#10;&#10;• Shipment included&#10;&#10;• " textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font>
+         </Label>
+         <Label layoutX="59.0" layoutY="78.0" text="30€" textFill="WHITE">
+            <font>
+               <Font name="System Bold Italic" size="64.0" />
+            </font>
+         </Label>
+         <Label layoutX="192.0" layoutY="125.0" text="every month" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
+</children></Pane>

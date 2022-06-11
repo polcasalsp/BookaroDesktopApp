@@ -42,10 +42,10 @@ public class MainController {
 	private MenuButton adminTools;
 	
 	@FXML
-	private MenuItem manageClientsBtn, manageEmployeesBtn, manageBooksBtn;
+	private MenuItem manageClientsBtn, manageEmployeesBtn, manageBooksBtn, manageAuthorsBtn, manageEditorialsBtn, manageOrdersBtn;
 	
 	@FXML
-	private Pane searchBooksPane, homePane, settingsPane, manageProfilePane, clientManagerPane, employeeManagerPane, bookManagerPane;	
+	private Pane searchBooksPane, homePane, manageSubscriptionsPane, manageProfilePane, clientManagerPane, employeeManagerPane, bookManagerPane, authorManagerPane, editorialManagerPane, orderManagerPane;	
 	
 	private DBCallService dbcs;
 	
@@ -57,11 +57,10 @@ public class MainController {
 		homePane.toFront();
 		
     	try {
-    		String token = LoginService.getLogin().getToken();
 			dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
-			User currentUser = getCurrentUser(token);
+			User currentUser = getCurrentUser();
 			manageProfileBtn.setText(currentUser.getName() + "\n" + currentUser.getSurname());
-			if (Tools.getRoleFromToken(token).equals("ROLE_ADMIN")) {
+			if (Tools.getRoleFromToken().equals("ROLE_ADMIN")) {
 	    		adminTools.visibleProperty().set(true);		
 			}
 		} catch (IOException e) {
@@ -85,7 +84,7 @@ public class MainController {
 			searchBooksPane.toFront();
 		} else if (event.getSource() == subsBtn) {
 			currentMenuLabel.setText("Subscriptions");
-			settingsPane.toFront();
+			manageSubscriptionsPane.toFront();
 		} else if (event.getSource() == manageClientsBtn){
 			currentMenuLabel.setText("Admin Tools - Manage Clients");			
 			clientManagerPane.toFront();
@@ -95,6 +94,15 @@ public class MainController {
 		} else if (event.getSource() == manageBooksBtn){
 			currentMenuLabel.setText("Admin Tools - Manage Books");
 			bookManagerPane.toFront();
+		} else if (event.getSource() == manageAuthorsBtn){
+			currentMenuLabel.setText("Admin Tools - Manage Authors");
+			authorManagerPane.toFront();
+		} else if (event.getSource() == manageEditorialsBtn){
+			currentMenuLabel.setText("Admin Tools - Manage Editorials");
+			editorialManagerPane.toFront();
+		} else if (event.getSource() == manageOrdersBtn){
+			currentMenuLabel.setText("Admin Tools - Manage Orders");
+			orderManagerPane.toFront();
 		} else {
 			currentMenuLabel.setText("Home");
 			homePane.toFront();
@@ -107,8 +115,8 @@ public class MainController {
 	 * @author Pol Casals
 	 * @throws IOException
 	 */
-	public User getCurrentUser(String token) throws IOException {
-		Response<User> findUser = dbcs.findByUsername(Tools.getUsernameFromToken(token)).execute();
+	public User getCurrentUser() throws IOException {
+		Response<User> findUser = dbcs.findByUsername(Tools.getUsernameFromToken()).execute();
     	if (findUser != null) {    
         	return findUser.body();
     	}

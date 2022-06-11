@@ -7,7 +7,7 @@
 
 <Pane layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.BookManagerController">
 <children>
-   <TableView fx:id="bookTable" layoutX="15" layoutY="10.0" editable="true" prefHeight="715.0" prefWidth="930.0">
+   <TableView fx:id="bookTable" editable="true" layoutX="15" layoutY="10.0" prefHeight="715.0" prefWidth="930.0">
      <columns>
          <TableColumn fx:id="idColumn" maxWidth="30" prefWidth="30.0" text="Id" />
          <TableColumn fx:id="nameColumn" prefWidth="175.0" text="name" />
@@ -18,8 +18,9 @@
          <TableColumn fx:id="synopsisColumn" prefWidth="175.0" text="synopsis" />
      </columns>
    </TableView>
-   <MFXButton fx:id="addBtn" layoutX="960" layoutY="75.0" text="Add" onAction="#handleCrudButton" prefWidth="100"/>
-   <MFXButton fx:id="updateBtn" layoutX="960" layoutY="150.0" text="Update" onAction="#handleCrudButton" prefWidth="100"/>
-   <MFXButton fx:id="deleteBtn" layoutX="960" layoutY="225.0" text="Delete" onAction="#handleCrudButton" prefWidth="100"/>   
-   <MFXButton fx:id="refreshBtn" layoutX="960" layoutY="300.0" text="Refresh" onAction="#handleCrudButton" prefWidth="100"/>
+   <MFXButton fx:id="addBtn" layoutX="960" layoutY="75.0" onAction="#handleCrudButton" prefWidth="100" text="Add" />
+   <MFXButton fx:id="updateBtn" layoutX="960" layoutY="150.0" onAction="#handleCrudButton" prefWidth="100" text="Update" />
+   <MFXButton fx:id="deleteBtn" layoutX="960" layoutY="225.0" onAction="#handleCrudButton" prefWidth="100" text="Delete" />   
+   <MFXButton fx:id="refreshBtn" layoutX="960" layoutY="300.0" onAction="#handleCrudButton" prefWidth="100" text="Refresh" />
+   <MFXButton fx:id="addCoverBtn" layoutX="960" layoutY="375.0" onAction="#handleCrudButton" prefWidth="100" text="Cover..." />
 </children></Pane>

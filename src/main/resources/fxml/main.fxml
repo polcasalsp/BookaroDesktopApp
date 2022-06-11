@@ -9,136 +9,148 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="1080.0" maxWidth="1920.0" minHeight="800.0" minWidth="1280.0" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.MainController">
+<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.MainController">
    <children>
-      <Pane fx:id="topBar" layoutX="200.0" prefHeight="64.0" prefWidth="1080.0" style="-fx-background-color: #1B69D6;">
+      <Pane stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="closeBtn" layoutX="1031.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #E81123;" text="X" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <padding>
-                  <Insets bottom="1.0" right="1.0" />
-               </padding>
-            </Button>
-            <Label fx:id="currentMenuLabel" layoutX="14.0" layoutY="14.0" styleClass="menu-label" stylesheets="@../style.css" text="Home" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-         </children>
+            <Pane fx:id="topBar" layoutX="200.0" prefHeight="64.0" prefWidth="1080.0" style="-fx-background-color: #1B69D6;">
+               <children>
+                  <Button fx:id="closeBtn" layoutX="1031.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #E81123;" text="X" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="1.0" right="1.0" />
+                     </padding>
+                  </Button>
+                  <Label fx:id="currentMenuLabel" layoutX="14.0" layoutY="14.0" styleClass="menu-label" stylesheets="@../style.css" text="Home" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="sideBar" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
+               <children>
+                  <Button fx:id="logoutBtn" cancelButton="true" layoutX="40.0" layoutY="690.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Logout" textAlignment="CENTER" textFill="WHITE" translateY="50.0" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-logout-96.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="subsBtn" layoutX="20.0" layoutY="320.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Subscription" textAlignment="CENTER" textFill="WHITE" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-settings-96.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="booksBtn" layoutX="20.0" layoutY="260.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Search Books" textAlignment="CENTER" textFill="WHITE" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-bookmark-96.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="homeBtn" layoutX="20.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Home" textAlignment="CENTER" textFill="WHITE" underline="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-home-96.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <MenuButton fx:id="adminTools" layoutX="20.0" layoutY="380.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Admin tools" textFill="WHITE" visible="false">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Manage Users">
+                           <items>
+                            <MenuItem fx:id="manageClientsBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Clients" />
+                              <MenuItem fx:id="manageEmployeesBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Employees" />
+                           </items>
+                        </Menu>
+                      <MenuItem fx:id="manageBooksBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Books" />
+                        <MenuItem fx:id="manageAuthorsBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Authors" />
+                        <MenuItem fx:id="manageEditorialsBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Editorials" />
+                        <MenuItem fx:id="manageOrdersBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Orders" />
+                    </items>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-toolbox-24.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </MenuButton>
+                  <Button fx:id="manageProfileBtn" alignment="TOP_CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="48.0" maxWidth="200.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/icons8-user-location-100.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <fx:include fx:id="homePane" source="home.fxml" />
+            <fx:include fx:id="searchBooksPane" source="searchBooks.fxml" />
+            <fx:include fx:id="manageProfilePane" source="manageProfile.fxml" />
+            <fx:include fx:id="manageSubscriptionsPane" source="manageSubscriptions.fxml" />
+      	  	<fx:include fx:id="clientManagerPane" source="clientManager.fxml" />            
+      	  	<fx:include fx:id="employeeManagerPane" source="employeeManager.fxml" />
+      	  	<fx:include fx:id="bookManagerPane" source="bookManager.fxml" />
+			<fx:include fx:id="authorManagerPane" source="authorManager.fxml" />
+			<fx:include fx:id="editorialManagerPane" source="editorialManager.fxml" />
+			<fx:include fx:id="orderManagerPane" source="orderManager.fxml" />
+         </children>   
       </Pane>
-      <Pane fx:id="sideBar" prefHeight="800.0" prefWidth="200.0" style="-fx-background-color: #2D3447;">
-         <children>
-            <Button fx:id="logoutBtn" cancelButton="true" layoutX="40.0" layoutY="690.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Logout" textAlignment="CENTER" textFill="WHITE" translateY="50.0" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-logout-96.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="subsBtn" layoutX="20.0" layoutY="320.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Subscriptions" textAlignment="CENTER" textFill="WHITE" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-settings-96.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="booksBtn" layoutX="20.0" layoutY="260.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Search Books" textAlignment="CENTER" textFill="WHITE" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-bookmark-96.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="homeBtn" layoutX="20.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" styleClass="main-menu-button" text="Home" textAlignment="CENTER" textFill="WHITE" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-home-96.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <MenuButton fx:id="adminTools" layoutX="20.0" layoutY="380.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Admin tools" textFill="WHITE" visible="false">
-              <items>
-                  <Menu mnemonicParsing="false" text="Manage Users">
-                     <items>
-                      <MenuItem fx:id="manageClientsBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Clients" />
-                        <MenuItem fx:id="manageEmployeesBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Employees" />
-                     </items>
-                  </Menu>
-                <MenuItem fx:id="manageBooksBtn" mnemonicParsing="false" onAction="#handleButtonAction" text="Manage Books" />
-              </items>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-toolbox-24.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </MenuButton>
-            <Button fx:id="manageProfileBtn" alignment="TOP_CENTER" contentDisplay="TOP" graphicTextGap="0.0" layoutX="48.0" maxWidth="200.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <graphic>
-                  <ImageView fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/icons8-user-location-100.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children></Pane>
-      <Pane fx:id="manageProfilePane" layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" />
-      <Pane fx:id="homePane" layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" />
-      <Pane fx:id="settingsPane" layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" />
-      <fx:include fx:id="searchBooksPane" source="searchBooks.fxml" />
-	  <fx:include fx:id="clientManagerPane" source="clientManager.fxml" />
-      <fx:include fx:id="bookManagerPane" source="bookManager.fxml" />
-	  <fx:include fx:id="employeeManagerPane" source="employeeManager.fxml" />   
-   </children>   
-</Pane>
+   </children>
+</AnchorPane>

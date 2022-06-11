@@ -129,5 +129,12 @@ public class Order {
 		this.book = book;
 	}
 	
+	public String getClientName() {
+		return getClient().getName();
+	}
+	
+	public String getBookName() {
+		return this.getBook().getName();
+	}
 		
 }

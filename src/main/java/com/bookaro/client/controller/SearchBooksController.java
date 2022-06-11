@@ -15,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -36,9 +35,6 @@ public class SearchBooksController {
     
     @FXML
     private Button getBooksBtn;
-    
-    @FXML
-    private ScrollPane scroll;
 	
 	private DBCallService dbcs;
     
@@ -76,7 +72,7 @@ public class SearchBooksController {
 				break;							
 			case("author"):		
 				
-				if (book.getAuthor().toLowerCase()
+				if (book.getAuthor().getName().toLowerCase()
 					.contains(bookSearchBar.getText().toLowerCase())) {	
 					updatedBooks.add(book);
 				}

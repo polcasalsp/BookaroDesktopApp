@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import com.bookaro.client.Utils.Tools;
 import com.bookaro.client.model.Employee;
 import com.bookaro.client.service.DBCallService;
-import com.bookaro.client.service.LoginService;
 import com.bookaro.client.service.NetClientsService;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -31,7 +30,7 @@ public class EmployeeManagerController {
 	private TableView<Employee> employeeTable;
 	
 	@FXML
-	private TableColumn<Employee, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, roleColumn, idColumn, positionColumn;
+	private TableColumn<Employee, String> usernameColumn, passwordColumm, emailColumn, firstNameColumn, lastNameColumn, idColumn, positionColumn;
 	
 	@FXML
 	private TableColumn<Employee, Double> salaryColumn;
@@ -44,7 +43,7 @@ public class EmployeeManagerController {
 	private DBCallService dbcs;
 	
 	public void initialize() throws IOException {
-		if (Tools.getRoleFromToken(LoginService.getLogin().getToken()).equals("ROLE_ADMIN")) {
+		if (Tools.getRoleFromToken().equals("ROLE_ADMIN")) {
 			dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 			getEmployees();
 			populateTable();   	
@@ -69,7 +68,7 @@ public class EmployeeManagerController {
 			employeeTable.getItems().setAll(Employees);
 		} else if (event.getSource() == updateBtn) {
 			if (!employeeTable.getSelectionModel().isEmpty()) {
-				dbcs.updateEmployee(employeeTable.getSelectionModel().getSelectedItem()).execute();
+				dbcs.updateEmployeeAdmin(employeeTable.getSelectionModel().getSelectedItem()).execute();
 				getEmployees();
 				employeeTable.getItems().setAll(Employees);
 			}
@@ -127,9 +126,6 @@ public class EmployeeManagerController {
 		lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
 		lastNameColumn.setOnEditCommit(e -> e.getRowValue().setSurname(e.getNewValue()));
 		
-		roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-		roleColumn.setOnEditCommit(e -> e.getRowValue().setRole(e.getNewValue()));
-		
 		positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
 		positionColumn.setOnEditCommit(e -> e.getRowValue().setPosition(e.getNewValue()));
 		
@@ -138,7 +134,7 @@ public class EmployeeManagerController {
 		
 		employeeTable.getItems().setAll(Employees);		
 		
-		for (TableColumn col : employeeTable.getColumns().subList(1, employeeTable.getColumns().size()-1)) {
+		for (TableColumn col : employeeTable.getColumns().subList(1, employeeTable.getColumns().size())) {
 			col.setCellFactory(TextFieldTableCell.forTableColumn());
 		}		
 		

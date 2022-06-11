@@ -15,7 +15,6 @@
          <TableColumn fx:id="emailColumn" prefWidth="200.0" text="email" />
          <TableColumn fx:id="firstNameColumn" prefWidth="100.0" text="first name" />
          <TableColumn fx:id="lastNameColumn" prefWidth="100.0" text="last name" />
-         <TableColumn fx:id="roleColumn" prefWidth="100.0" text="role" />
          <TableColumn fx:id="positionColumn" prefWidth="100.0" text="position" />
          <TableColumn fx:id="salaryColumn" prefWidth="100.0" text="salary" />
      </columns>

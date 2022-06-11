@@ -20,7 +20,7 @@
 
 .mfx-button {
 	-fx-background-color: #1B69D6; 
-	-fx-background-radius: 25;
+	-fx-background-radius: 10;
 	-fx-text-fill: white;
 	-fx-font-size: 18px;
 }
@@ -30,12 +30,20 @@
     background-color: transparent;
 }
 
+.scroll-pane {
+    -fx-background-color:transparent;
+}
+
+.table-view {
+    -fx-background-color:transparent;
+}
+
 .menu-label {
 	-fx-text-fill: white;
 }
 
 .pane {
-	-fx-background-color: #b8cdf8;
+	-fx-background-color: #7CA8E6;
 }
 
 .main-menu-button {

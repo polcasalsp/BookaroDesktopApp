@@ -15,7 +15,7 @@
    <children>
       <HBox prefHeight="650.0" prefWidth="1080.0">
          <children>
-            <ScrollPane fx:id="scroll" prefHeight="650.0" prefWidth="1080.0">
+            <ScrollPane prefHeight="650.0" prefWidth="1080.0">
                <content>
                   <GridPane fx:id="grid">
                      <rowConstraints>

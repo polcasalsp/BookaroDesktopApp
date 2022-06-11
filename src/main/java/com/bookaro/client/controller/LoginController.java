@@ -63,7 +63,6 @@ public class LoginController {
 	private void initialize() throws IOException {
 		loginPane.toFront();
 		dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
-		
 	}
 	
 	/**
@@ -102,6 +101,13 @@ public class LoginController {
         checkLoginChangeScene(token);    
 	}
 	
+	/**
+	 * Si las credenciales son correctas y por tanto
+	 * se ha recibido un token del servidor, procede
+	 * a cambiar la escena a la vista principal.
+	 * @author Pol Casals
+	 * @throws IOException
+	 */
 	private void checkLoginChangeScene(String token) throws IOException {
 		if (token != "") {
         	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
@@ -151,29 +157,15 @@ public class LoginController {
 		Client cli = new Client();
 		cli.setUsername(newUsernameField.getText());		
 		cli.setPassword(newPasswordField.getText());
+		cli.setDni(newDniField.getText());
+		cli.setAddress(newAdressField.getText());
+		cli.setAge(Integer.parseInt(newAgeField.getText()));
 		cli.setEmail(newEmailField.getText());
 		cli.setName(newNameField.getText());
 		cli.setSurname(newSurnameField.getText());
-		Subscription sub = dbcs.findSubById(1).execute().body();
+		Subscription sub = dbcs.findSubById(3).execute().body();
 		cli.setSubscription(sub);
 		dbcs.newClient(cli).execute();
-	}
-	
-	/**
-	 * Si las credenciales son correctas y por tanto
-	 * se ha recibido un token del servidor, procede
-	 * a cambiar la escena a la vista principal.
-	 * @author Pol Casals
-	 * @throws IOException
-	 */
-	private void changeScene() throws IOException {		
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));  
-    	Parent mainScreen = loader.load();
-        Stage stage = (Stage)loginBtn.getScene().getWindow();
-        Scene scene = new Scene(mainScreen, 1280, 800);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-        Tools.draggableWindow(stage, mainScreen);
-        stage.setScene(scene);	            
 	}
 	
 	/**

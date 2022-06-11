@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.AuthorManagerController">
+<children>
+   <TableView fx:id="authorTable" layoutX="15" layoutY="10.0" editable="true" prefHeight="715.0" prefWidth="930.0">
+     <columns>
+         <TableColumn fx:id="idColumn" maxWidth="30" prefWidth="30.0" text="Id" />
+		 <TableColumn fx:id="nameColumn" maxWidth="100" prefWidth="100" text="name" />
+		 <TableColumn fx:id="nacionalityColumn" maxWidth="150" prefWidth="150" text="nacionality" />
+     </columns>
+   </TableView>
+   <MFXButton fx:id="addBtn" layoutX="960" layoutY="75.0" text="Add" onAction="#handleCrudButton" prefWidth="100"/>
+   <MFXButton fx:id="updateBtn" layoutX="960" layoutY="150.0" text="Update" onAction="#handleCrudButton" prefWidth="100"/>
+   <MFXButton fx:id="deleteBtn" layoutX="960" layoutY="225.0" text="Delete" onAction="#handleCrudButton" prefWidth="100"/>   
+   <MFXButton fx:id="refreshBtn" layoutX="960" layoutY="300.0" text="Refresh" onAction="#handleCrudButton" prefWidth="100"/>
+</children></Pane>

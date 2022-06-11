@@ -2,19 +2,13 @@ package com.bookaro.client.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.bookaro.client.Utils.Tools;
 import com.bookaro.client.model.Client;
-import com.bookaro.client.model.Order;
 import com.bookaro.client.model.Subscription;
-import com.bookaro.client.model.User;
 import com.bookaro.client.service.DBCallService;
-import com.bookaro.client.service.LoginService;
 import com.bookaro.client.service.NetClientsService;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -50,18 +44,10 @@ public class ClientManagerController {
 	private DBCallService dbcs;
 	
 	public void initialize() throws IOException {
-		if (Tools.getRoleFromToken(LoginService.getLogin().getToken()).equals("ROLE_ADMIN")) {
+		if (Tools.getRoleFromToken().equals("ROLE_ADMIN")) {
 			dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
 			getClients();
 			populateTable();   
-			List<Client> clients = dbcs.getClients().execute().body();
-			clients.stream().forEach(client -> System.out.println(client.getOrders()));
-			List<Order> orders = dbcs.getOrders().execute().body();
-			System.out.println(orders.get(0).getClient().getName());
-			System.out.println(dbcs.findSubById(2).execute().body().getType());
-			dbcs.findSubById(1).execute().body().getAllClients().stream().forEach(c -> System.out.println("sub 1 clients: " + c.getName()));
-			dbcs.findSubById(2).execute().body().getAllClients().stream().forEach(c -> System.out.println("sub 2 clients: " + c.getName()));
-			dbcs.findSubById(3).execute().body().getAllClients().stream().forEach(c -> System.out.println("sub 3 clients: " + c.getName()));
 		} 			
 	}
 	
@@ -75,15 +61,17 @@ public class ClientManagerController {
 	private void handleCrudButton(ActionEvent event) throws IOException {
 		if (event.getSource() == addBtn) {
 			Client cli = new Client();
+			Subscription sub = dbcs.findSubById(3).execute().body();
 			cli.setUsername("");
 			cli.setPassword("");
 			cli.setEmail("");
+			cli.setSubscription(sub);
 			dbcs.newClient(cli).execute();			
 			getClients();
 			clientTable.getItems().setAll(clients);
 		} else if (event.getSource() == updateBtn) {
 			if (!clientTable.getSelectionModel().isEmpty()) {
-				dbcs.updateClient(clientTable.getSelectionModel().getSelectedItem()).execute();
+				dbcs.updateClientAdmin(clientTable.getSelectionModel().getSelectedItem()).execute();
 				getClients();
 				clientTable.getItems().setAll(clients);
 			}
@@ -148,12 +136,12 @@ public class ClientManagerController {
 		
 		ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
 		ageColumn.setOnEditCommit(e -> e.getRowValue().setAge(e.getNewValue()));
-		
-		subColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSubscription().getType()));
+
+		subColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSubscription().getType()));		
 		
 		clientTable.getItems().setAll(clients);
 		
-		for (TableColumn col : clientTable.getColumns().subList(1, clientTable.getColumns().size()-1)) {
+		for (TableColumn col : clientTable.getColumns().subList(1, clientTable.getColumns().size()-2)) {
 			col.setCellFactory(TextFieldTableCell.forTableColumn());
 		}		
 	}

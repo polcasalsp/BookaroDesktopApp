@@ -1,9 +1,15 @@
 package com.bookaro.client.Utils;
 
+import java.io.IOException;
 import java.util.Base64;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.bookaro.client.model.Client;
+import com.bookaro.client.service.DBCallService;
+import com.bookaro.client.service.LoginService;
+import com.bookaro.client.service.NetClientsService;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -16,6 +22,8 @@ import javafx.stage.Window;
  *
  */
 public class Tools {
+	
+	private static DBCallService dbcs;
 	
 	/**
 	 * Alerta tipo error.
@@ -66,8 +74,8 @@ public class Tools {
      * @param token
      * @return
      */
-    public static String getRoleFromToken(String token) {
-    	String[] chunks = token.split("\\.");
+    public static String getRoleFromToken() {
+    	String[] chunks = LoginService.getLogin().getToken().split("\\.");
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 		String payload = new String(decoder.decode(chunks[1]));
 		JSONObject jsonPayload = new JSONObject(payload);
@@ -82,12 +90,17 @@ public class Tools {
      * @param token
      * @return
      */
-    public static String getUsernameFromToken(String token) {
-    	String[] chunks = token.split("\\.");
+    public static String getUsernameFromToken() {
+    	String[] chunks = LoginService.getLogin().getToken().split("\\.");
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 		String payload = new String(decoder.decode(chunks[1]));
 		JSONObject jsonPayload = new JSONObject(payload);
 		return jsonPayload.get("sub").toString();
+    }
+    
+    public static Client getCurrentClient() throws IOException {
+    	dbcs = NetClientsService.getRetrofitClient().create(DBCallService.class);
+    	return dbcs.findClientByUsername(getUsernameFromToken()).execute().body();
     }
     
     /**

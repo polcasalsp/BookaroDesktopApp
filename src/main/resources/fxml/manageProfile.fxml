@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.ManageProfileController">
+   <children>
+      <TextField fx:id="usernameField" layoutX="175.0" layoutY="100.0" />
+      <TextField fx:id="passwordField" layoutX="175.0" layoutY="175.0" />
+      <TextField fx:id="rePasswordField" layoutX="175.0" layoutY="250.0" />
+      <TextField fx:id="addressField" layoutX="175.0" layoutY="325.0" />
+      <TextField fx:id="emailField" layoutX="175.0" layoutY="400.0" />
+      <Label layoutX="100.0" layoutY="100.0" text="username" />
+      <Label layoutX="100.0" layoutY="175.0" text="password" />
+      <Label layoutX="100.0" layoutY="250.0" text="repeat &#10;password" />
+      <Label layoutX="100.0" layoutY="325.0" text="address" />
+      <Label layoutX="100.0" layoutY="400.0" text="email" />
+      <Label fx:id="pwMatchLabel" layoutX="175.0" layoutY="290.0" />
+      <MFXButton layoutX="414.0" onAction="#save" layoutY="400.0" text="Save" />
+   </children>
+</Pane>

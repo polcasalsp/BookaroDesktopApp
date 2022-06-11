@@ -4,14 +4,15 @@ package com.bookaro.client.model;
  * @author Pol Casals
  *
  */
-public class Book {
-	
+public class Book {	
 
 	private Long id;
 	
-	private String name, author, isbn, category, editorial, synopsis;
+	private String name, isbn, category, synopsis;
 
-	//private Order orderBook;
+	private Author author;
+	
+	private Editorial editorial;
 
 	/**
 	 * @author Pol Casals
@@ -23,7 +24,7 @@ public class Book {
 	 * @param editorial
 	 * @param synopsis
 	 */
-	public Book(Long id, String name, String author, String isbn, String category, String editorial, String synopsis) {
+	public Book(Long id, String name, Author author, String isbn, String category, Editorial editorial, String synopsis) {
 		this.id = id;
 		this.name = name;
 		this.author = author;
@@ -76,7 +77,7 @@ public class Book {
 	 * @author Pol Casals
 	 * @return
 	 */
-	public String getAuthor() {
+	public Author getAuthor() {
 		return author;
 	}
 
@@ -84,7 +85,7 @@ public class Book {
 	 * @author Pol Casals
 	 * @param author
 	 */
-	public void setAuthor(String author) {
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
 
@@ -124,7 +125,7 @@ public class Book {
 	 * @author Pol Casals
 	 * @return
 	 */
-	public String getEditorial() {
+	public Editorial getEditorial() {
 		return editorial;
 	}
 
@@ -132,7 +133,7 @@ public class Book {
 	 * @author Pol Casals
 	 * @param editorial
 	 */
-	public void setEditorial(String editorial) {
+	public void setEditorial(Editorial editorial) {
 		this.editorial = editorial;
 	}
 
@@ -152,11 +153,11 @@ public class Book {
 		this.synopsis = synopsis;
 	}
 	
-	/*public Order getOrderBook() {
-		return orderBook;
+	public String getAuthorName() {
+		return author.getName();
 	}
-
-	public void setOrderBook(Order orderBook) {
-		this.orderBook = orderBook;
-	}*/
+	
+	public String getEditorialName() {
+		return editorial.getName();
+	}
 }

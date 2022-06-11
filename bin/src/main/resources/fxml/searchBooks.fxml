@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<StackPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bookaro.client.controller.SearchBooksController" layoutX="200.0" layoutY="64.0" prefHeight="736.0" prefWidth="1080.0">
+   <children>
+      <HBox prefHeight="650.0" prefWidth="1080.0">
+         <children>
+            <ScrollPane fx:id="scroll" prefHeight="650.0" prefWidth="1080.0">
+               <content>
+                  <GridPane fx:id="grid">
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                     </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+      <Button fx:id="getBooksBtn" maxHeight="40.0" maxWidth="120.0" mnemonicParsing="false" onAction="#getBooks" styleClass="mfx-button" stylesheets="@../style.css" text="Search" StackPane.alignment="TOP_RIGHT">
+         <StackPane.margin>
+            <Insets right="20.0" top="10.0" />
+         </StackPane.margin>
+      </Button>
+      <ComboBox fx:id="bookSearchBy" maxHeight="40.0" maxWidth="150.0" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="15.0" top="10.0" />
+         </StackPane.margin>
+      </ComboBox>
+      <TextField fx:id="bookSearchBar" maxHeight="40.0" maxWidth="750.0" StackPane.alignment="TOP_LEFT">
+         <StackPane.margin>
+            <Insets left="165.0" top="10.0" />
+         </StackPane.margin>
+      </TextField>
+   </children>
+</StackPane>
